@@ -1,0 +1,7 @@
+button.link {
+    margin: 10px;
+}
+
+button.link > i {
+    margin-right: 10px;
+}
