@@ -17,11 +17,21 @@ $ n stable
 $ npm install pm2 -g
 ```
 
+##### Get code and install dependencies
+
+```
+$ git clone https://github.com/VasseurLaurent/application-portal.git
+$ cd application-portal
+$ npm install
+```
+
 ##### Launch app using pm2
 
 ```
 $ pm2 start index.js --name application-portal
 ```
+
+Now the app runs on port 3000.
 
 ###### Some useful pm2 commands
 
@@ -31,5 +41,3 @@ $ pm2 restart application-portal
 $ pm2 status
 $ pm2 logs application-portal
 ```
-
-Now the app runs on port 3000.
