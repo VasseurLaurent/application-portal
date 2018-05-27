@@ -1,0 +1,21 @@
+html
+  include ./includes/head.jade
+
+  body
+    div.container
+      div.jumbotron
+        include ./includes/top.jade
+
+        if message
+          = message
+
+        form(name="login" action="/login", method="post")
+          div.form-group
+            label(for="email") Email
+            input.form-control(type="email", name="email", id="email")
+          div.form-group
+            label(for="password") Password
+            input.form-control(type="password", name="password", id="password")
+          input.btn.btn-default(type="submit" value="Submit")
+
+    script(src="/scripts/script.js")

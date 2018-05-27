@@ -1,7 +1,11 @@
-button.link {
+button.link, a.action {
     margin: 10px;
 }
 
-button.link > i {
+a.table-action {
+    margin: 0 10px;
+}
+
+button.link > i, a.action > i, a.table-action > i {
     margin-right: 10px;
 }

@@ -1,0 +1,17 @@
+h1 Laurent Vasseur - Portal
+
+p Welcome to my portal
+
+if user
+  | Logged in as: #{user.type}
+  a.btn.btn-default(href='/logout')
+    | logout
+  if user.type == 'Admin'
+    br
+    a.btn.btn-primary.action(href='/manage-users')
+      i.fa.fa-users
+      | Manage users
+else
+  a.btn.btn-default(href='/login')
+    | login
+br

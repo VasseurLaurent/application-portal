@@ -1,6 +1,10 @@
 var express = require('express');
+var session = require('express-session');
 var bodyParser = require('body-parser');
 var fs = require('fs');
+var md5 = require('md5');
+var Users = require('./users');
+var AppSession = require('./session');
 
 var app = express();
 
@@ -15,8 +19,20 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(session({
+    secret: 'work hard',
+    resave: true,
+    saveUninitialized: false
+  }));
+
+var users = new Users();
+var appSession = new AppSession();
 
 app.get('/', function(req, res) {
+    fs.readFile(__dirname + '/users.json', "utf8", function(err, data) {
+        if (err) return res.redirect('/create-admin');
+    })
+
     fs.readFile(__dirname + '/links.json', "utf8", function(err, data) {
         
         var links = [];
@@ -26,10 +42,27 @@ app.get('/', function(req, res) {
 
         res.render('home', {
             err: err,
-            links: links
+            links: links,
+            user: req.session.user
         })
         
     })
 })
+
+app.get('/create-admin', users.getCreateAdmin)
+
+app.post('/create-admin', users.postCreateAdmin)
+
+app.get('/login', appSession.getLogin)
+
+app.post('/login', appSession.postLogin)
+
+app.get('/logout', appSession.logout)
+
+app.get('/manage-users', users.listUsers)
+
+app.post('/add-guest', users.addGuest)
+
+app.get('/remove-guest', users.removeGuest)
 
 app.listen(3000);
