@@ -7,7 +7,7 @@ html
         include ./includes/top.jade
 
         if err
-          | Error while trying to read links.json file
+          | There is not link yet
         else
           - each link in links
             button.btn.btn-default.link(href=link.url, target="_blank")

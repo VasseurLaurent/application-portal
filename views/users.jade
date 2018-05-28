@@ -21,7 +21,7 @@ html
                 td
                   = guest.email
                 td
-                  a.btn.btn-danger.btn-sm.table-action(href='/remove-guest?email='+guest.email)
+                  a.btn.btn-danger.btn-sm.table-action(href='/remove-guest?email=#{encodeURIComponent(guest.email)}')
                     i.fa.fa-user-times
                     | Remove user
 

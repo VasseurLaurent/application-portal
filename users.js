@@ -75,7 +75,7 @@ module.exports = class Users {
                 users.guests = [];
 
             var toRemove = users.guests.find(function(element) {
-                return element.email == req.query.email;
+                return element.email == decodeURIComponent(req.query.email);
             })
 
             if (toRemove) {

@@ -5,6 +5,7 @@ var fs = require('fs');
 var md5 = require('md5');
 var Users = require('./users');
 var AppSession = require('./session');
+var Links = require('./links');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(session({
 
 var users = new Users();
 var appSession = new AppSession();
+var linksClass = new Links();
 
 app.get('/', function(req, res) {
     fs.readFile(__dirname + '/users.json', "utf8", function(err, data) {
@@ -38,6 +40,13 @@ app.get('/', function(req, res) {
         var links = [];
         if (!err) {
             var links = JSON.parse(data);            
+        }
+
+        if (!req.session.user) {
+            links = links.filter(link => link.security == 'public');
+        }
+        else if (req.session.user && req.session.user.type == 'Guest') {
+            links = links.filter(link => link.security != 'admin');
         }
 
         res.render('home', {
@@ -64,5 +73,11 @@ app.get('/manage-users', users.listUsers)
 app.post('/add-guest', users.addGuest)
 
 app.get('/remove-guest', users.removeGuest)
+
+app.get('/manage-links', linksClass.listLinks)
+
+app.post('/add-link', linksClass.addLink)
+
+app.get('/remove-link', linksClass.removeLink)
 
 app.listen(3000);

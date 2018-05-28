@@ -8,9 +8,15 @@ if user
     | logout
   if user.type == 'Admin'
     br
+    a.btn.btn-primary.action(href='/')
+      i.fa.fa-home
+      | Home
     a.btn.btn-primary.action(href='/manage-users')
       i.fa.fa-users
       | Manage users
+    a.btn.btn-primary.action(href='/manage-links')
+      i.fa.fa-external-link
+      | Manage links
 else
   a.btn.btn-default(href='/login')
     | login

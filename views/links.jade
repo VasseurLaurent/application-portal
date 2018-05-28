@@ -1,0 +1,57 @@
+html
+  include ./includes/head.jade
+
+  body
+    div.container
+      div.jumbotron
+        include ./includes/top.jade
+
+        if message
+          = message
+
+        div.table-responsive
+          table.table.table-striped
+            thead
+              tr 
+                th name
+                th logo
+                th url
+                th security
+                th actions
+            tbody
+            - each link in links
+              tr
+                td
+                  = link.name
+                td
+                  i.fa(class=link.logo)
+                td
+                  = link.url
+                td
+                  = link.security
+                td
+                  a.btn.btn-danger.btn-sm.table-action(href='/remove-link?name=#{encodeURIComponent(link.name)}&logo=#{encodeURIComponent(link.logo)}&url=#{encodeURIComponent(link.url)}&security=#{encodeURIComponent(link.security)}')
+                    i.fa.fa-times
+                    | Remove link
+
+        h3 Add a link
+
+        form(name="add-link" action="/add-link", method="post")
+          div.form-group
+            label(for="name") Name
+            input.form-control(type="text", name="name", id="name")
+          div.form-group
+            label(for="logo") Logo
+            input.form-control(type="text", name="logo", id="logo")
+          div.form-group
+            label(for="url") Url
+            input.form-control(type="text", name="url", id="url")
+          div.form-group
+            label(for="security") Security
+            select.form-control(name='security' id='security')
+              option(value='public') public
+              option(value='guests') guests
+              option(value='admin') admin
+          input.btn.btn-default(type="submit" value="Submit")
+
+    script(src="/scripts/script.js")
