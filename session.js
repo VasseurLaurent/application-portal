@@ -28,16 +28,30 @@ module.exports = class Session {
                     return res.redirect('/');
                 }
                 else if (users.guests) {
+                    var check = 0;
+
+                    var interval = setInterval(function() {
+                        if (check == users.guests.length) {
+                            return res.render('login', {
+                                message: "Email & password don't match. Could not log in."
+                            });
+                        }
+                    }, 50);
+
                     users.guests.forEach(function(guest) {
                         if (req.body.email == guest.email && md5(req.body.password) == guest.password) {
                             req.session.user = {type: "Guest"};
                             return res.redirect('/');
                         }
+                        check++;
                     })
+
                 }
-                return res.render('login', {
-                    message: "Email & password don't match. Could not log in."
-                });
+                else {
+                    return res.render('login', {
+                        message: "Email & password don't match. Could not log in."
+                    });
+                }
             })
         })
     }
