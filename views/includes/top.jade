@@ -1,6 +1,6 @@
-h1 Laurent Vasseur - Portal
+h1 #{settings.websiteTitle}
 
-p Welcome to my portal
+p #{settings.websiteSubTitle}
 
 if user
   | Logged in as: #{user.type}
@@ -17,6 +17,9 @@ if user
     a.btn.btn-primary.action(href='/manage-links')
       i.fa.fa-external-link
       | Manage links
+    a.btn.btn-primary.action(href='/settings')
+      i.fa.fa-cogs
+      | Settings
 else
   a.btn.btn-default(href='/login')
     | login

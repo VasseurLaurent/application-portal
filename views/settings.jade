@@ -1,0 +1,20 @@
+html
+  include ./includes/head.jade
+
+  body
+    div.container
+      div.jumbotron
+        include ./includes/top.jade
+
+        h3 Let's set up your application portal
+
+        form(name="settings" action="/settings", method="post")
+          div.form-group
+            label(for="websiteTitle") Title
+            input.form-control(type="text", name="websiteTitle", id="websiteTitle" required value=settings.websiteTitle)
+          div.form-group
+            label(for="websiteSubTitle") Sub Title
+            input.form-control(type="text", name="websiteSubTitle", id="websiteSubTitle" required value=settings.websiteSubTitle)
+          input.btn.btn-default(type="submit" value="Submit")
+
+    script(src="/scripts/script.js")

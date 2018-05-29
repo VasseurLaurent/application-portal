@@ -6,7 +6,7 @@ html
       div.jumbotron
         include ./includes/top.jade
 
-        if err
+        if links.length == 0
           | There is not link yet
         else
           - each link in links

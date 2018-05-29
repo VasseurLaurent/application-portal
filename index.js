@@ -6,6 +6,7 @@ var md5 = require('md5');
 var Users = require('./users');
 var AppSession = require('./session');
 var Links = require('./links');
+var Settings = require('./settings');
 
 var app = express();
 
@@ -29,32 +30,27 @@ app.use(session({
 var users = new Users();
 var appSession = new AppSession();
 var linksClass = new Links();
+var appSettings = new Settings();
 
 app.get('/', function(req, res) {
-    fs.readFile(__dirname + '/users.json', "utf8", function(err, data) {
+    fs.readFile(__dirname + '/settings.json', "utf8", function(err, data) {
         if (err) return res.redirect('/create-admin');
-    })
 
-    fs.readFile(__dirname + '/links.json', "utf8", function(err, data) {
-        
-        var links = [];
-        if (!err) {
-            var links = JSON.parse(data);            
-        }
+        var settings = JSON.parse(data);
+        if (typeof settings.links == 'undefined') settings.links = [];
 
         if (!req.session.user) {
-            links = links.filter(link => link.security == 'public');
+            settings.links = settings.links.filter(link => link.security == 'public');
         }
         else if (req.session.user && req.session.user.type == 'Guest') {
-            links = links.filter(link => link.security != 'admin');
+            settings.links = settings.links.filter(link => link.security != 'admin');
         }
 
         res.render('home', {
-            err: err,
-            links: links,
+            settings: settings.settings,
+            links: settings.links,
             user: req.session.user
         })
-        
     })
 })
 
@@ -79,5 +75,9 @@ app.get('/manage-links', linksClass.listLinks)
 app.post('/add-link', linksClass.addLink)
 
 app.get('/remove-link', linksClass.removeLink)
+
+app.get('/settings', appSettings.getSettings);
+
+app.post('/settings', appSettings.postSettings);
 
 app.listen(3000);

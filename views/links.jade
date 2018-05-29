@@ -39,16 +39,16 @@ html
         form(name="add-link" action="/add-link", method="post")
           div.form-group
             label(for="name") Name
-            input.form-control(type="text", name="name", id="name")
+            input.form-control(type="text", name="name", id="name" required)
           div.form-group
             label(for="logo") Logo
-            input.form-control(type="text", name="logo", id="logo")
+            input.form-control(type="text", name="logo", id="logo" required)
           div.form-group
             label(for="url") Url
-            input.form-control(type="text", name="url", id="url")
+            input.form-control(type="text", name="url", id="url" required)
           div.form-group
             label(for="security") Security
-            select.form-control(name='security' id='security')
+            select.form-control(name='security' id='security' required)
               option(value='public') public
               option(value='guests') guests
               option(value='admin') admin
